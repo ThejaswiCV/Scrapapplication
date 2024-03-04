@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home window</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="{%static 'scrapapp/css/style.css'%}">
+</head>
+<body>
+
+  <style>
+  
+    .cart .cart-icon {
+        font-size: 2.5rem;
+        color: rgb(14, 145, 73);
+    }
+
+    /* body{
+            background-image: url("/static/scrapapp/images/bg1.png");
+            background-size: cover;
+            overflow-x: hidden; 
+        } */
+        
+  </style>
+  <!-- rgb(156, 223, 240) -->
+  
+
+
+    <nav class="navbar fixed-top" style="background-color: rgb(156, 223, 240);">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><img style="margin-left: 15px;"  src="{%static 'scrapapp/images/scrap_Box.png'%}" alt="" height="45px" >
+          </a>
+          <div class="input-group" style="width: 500px;margin-left: 200px;">
+            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+            <button type="button" class="btn btn-primary" data-mdb-ripple-init>search</button>
+          </div>
+          
+         <!-- profile dropdown  -->
+
+            <a class="nav-item dropdown" style="margin-left: 130px;">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                
+              </a>
+              <ul class="dropdown-menu"  style="margin-left: 1000px;">
+                <li><a class="dropdown-item" href="{%url 'scrap_add'%}">Add Scrap</a></li>
+                <li>
+
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{%url 'sign-out'%}">Logout</a></li>
+              </ul>
+              
+            </a>
+          
+           
+            <a class="btn fw-bold "   href="{%url 'profile_detail' request.user.profile.id%}">Hello, {{request.user}}<span class="badge"  > 
+              {%if request.user.profile.profile_picture%}
+              <img class="rounded-circle" src="{{request.user.profile.profile_picture.url}}" alt="Avatar" height="50px" width="50px">
+              {%else%}    
+              <img class="rounded-circle" src="{%static 'scrapapp/images/user_image2.png'%}" alt="" style="border-radius: 50%"; height="50px" width="50px" >
+              {%endif%}
+
+             
+            
+          </a>
+         
+          <!-- profile dropdown ends  -->
+
+
+          <!-- cart starts  -->
+          <div class="cart d-flex" >
+            <a href="{%url 'wishlist_toggle' request.user.profile.id%}">
+              <span class="material-symbols-outlined cart-icon">shopping_cart</span>
+              </a>
+              <p class="fw-bold mt-2" style="margin-right: 5px;" >Cart</p>
+          </div>
+          <!-- cart end  -->
+         
+      
+          <button class="navbar-toggler" type="button" style="margin-right: 10px;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header" style="background-color: rgba(153, 205, 209, 0.781)">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">SCRAP BOX</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{%url 'index'%}">Home</a>
+                </li>
+                <li class="nav-item">
+                  
+                  <a class="nav-link" href="{%url 'profile_detail' request.user.profile.id%}">My profile</a>
+                  
+                </li>
+
+
+                <!-- <div class="nav-item dropdown">
+                <a href="{%url 'category_detail' %}">cate</a>
+                </div> -->
+
+                <!-- <div class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Categories
+                  </a>
+                  <ul class="dropdown-menu">
+                      
+                          {% for cat in categories %}
+                              <li><a class="dropdown-item" href=""></a>{{cat.name}}</li>
+                          {% endfor %}
+                      
+                  </ul>
+              </div> -->
+
+        
+<!-- ... Your existing navigation bar code ... -->
+
+<!-- Categories dropdown -->
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" >
+      Categories
+  </a>
+  <ul class="dropdown-menu">
+      {% for cat in categories %}
+          <li><a class="dropdown-item" href="#">{{ cat.name }}</a></li>
+      {% endfor %}
+  </ul>
+</li>
+
+
+<!-- ... The rest of your navigation bar code ... -->
+
+
+
+                <li class="nav-item dropdown" >
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Scraps
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{%url 'scrap_add'%}">Add Scrap</a></li>
+                  
+                    <li>
+                      <hr class="dropdown-divider">
+                    </li>
+                    
+                  </ul>
+
+<ul class="navbar-nav justify-content-end flex-grow-1 pe-3" >
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{%url 'sign-out'%}">Logout</a>
+  </li>
+</ul>
+
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+      
+   
+<!-- carousel start  -->
+<!-- carousel------------------------------------------------------------------------->
+<div class="container-fluid p-0 ">
+
+  <div id="carouselExampleCaptions" class="carousel slide " data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner" >
+        <div class="carousel-item active" style="height: 570px;" >
+          <img src="{%static 'scrapapp/images/carousel5.jpg'%} " class="d-block w-100" alt="..." style="margin-top: -150px; " >
+          <div class="carousel-caption d-none d-md-block">
+            <h5></h5>
+            <p></p>
+          </div>
+        </div>
+        <div class="carousel-item" style="height: 570px;">
+          <img src=" {%static 'scrapapp/images/carousel7.jpg'%}" class="d-block w-100" alt="..."  style="margin-top: 30px;">
+          <div class="carousel-caption d-none d-md-block">
+            <h5> </h5>
+            <p></p>
+          </div>
+        </div>
+        <div class="carousel-item" style="height: 570px;">
+          <img src="{%static 'scrapapp/images/carousel8.jpg'%}"  class="d-block w-100" alt="..." style="margin-top: -20px;">
+          <div class="carousel-caption d-none d-md-block">
+            <h5></h5>
+            <p></p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+</div>
+<!-- carousel end  -->
+
+
+
+<!-- scrap list starts  -->
+<div class="container" style="margin-top: 50px;">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-5 mb-5">
+    {% for scrap in data %}
+      <div class="col mb-4">
+        <div class="card shadow" style="width: 100%; width: 13.5rem; height: 22rem;">
+          {% if scrap.picture %}
+            <a href="{% url 'scrap_details' scrap.id %}"><img src="{{ scrap.picture.url }}" class="card-img-top" alt="..." style="height: 240px; object-fit:fill;"></a>
+          {% endif %}
+          <div class="card-body">
+            <div class="fs-4">
+              ₹{{ scrap.price }}
+            </div>
+            <a href="{% url 'scrap_details' scrap.id %}" class="card-text text-decoration-none text-dark">{{ scrap.name }}</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+
+
+
+ <!-- <div class="container" style="margin-top: 50px;">
+  <div class="row mb-5">
+      {%for scrap in data%}
+      <div class="col-3 mb-4">
+          <div class="card shadow" style="width: 17rem;">
+              {%if scrap.picture%}
+              <a href="{%url 'scrap_details' scrap.id%}"><img  src="{{scrap.picture.url}}" class="card-img-top" alt="..." height="250px"></a>
+              {%endif%}
+              <div class="card-body">
+                <a href="{%url 'scrap_details' scrap.id%}" class="card-text text-decoration-none text-dark">{{scrap.name}}</a>
+               <div class="fs-4">
+                ₹{{scrap.price}}
+               </div>
+                <a href="{%url 'scrap_details' scrap.id%}" class="card-text text-decoration-none text-dark ">{{scrap.name}}</a>
+
+              </div>
+            </div>
+      </div>
+      {%endfor%}
+      <div class="col-3"></div>
+      <div class="col-3"></div>
+      <div class="col-3"></div>
+   
+  </div>
+</div> -->
+
+<!-- scrap list ends  -->
+
+<!-- footer section starts ...................................... -->
+<div class="container-fluid my-5">
+  <!-- Footer -->
+  <footer
+          class="text-center text-lg-start text-white"
+          style="background-color: rgba(2, 69, 75, 0.781)"
+          >
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+      <!-- Section: Links -->
+      <section class="">
+        <!--Grid row-->
+        <div class="row">
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+            <h6 class="text-uppercase mb-4 font-weight-bold">
+            Reuse Market
+            </h6>
+            <p>
+              Discover the joy of sustainable shopping at our online marketplace, where we connect buyers and sellers to give pre-loved items a second life. Browse through our diverse selection of quality used goods, from fashion to electronics, and contribute to a more eco-friendly and budget-conscious lifestyle. Shop smart, shop sustainable
+            </p>
+          </div>
+          <!-- Grid column -->
+
+          <hr class="w-100 clearfix d-md-none" />
+
+          <!-- Grid column -->
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+            <h6 class="text-uppercase mb-4 font-weight-bold">Connect with us</h6>
+            <p>
+              <a class="text-white">Instagram</a>
+            </p>
+            <p>
+              <a class="text-white">Facebook</a>
+            </p>
+            <p>
+              <a class="text-white">Twitter</a>
+            </p>
+            
+          </div>
+          <!-- Grid column -->
+
+          <hr class="w-100 clearfix d-md-none" />
+
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+            <h6 class="text-uppercase mb-4 font-weight-bold">
+              Useful links
+            </h6>
+            <p>
+              <a class="text-white">Your Account</a>
+            </p>
+            <p>
+              <a class="text-white">Become an Affiliate</a>
+            </p>
+            <p>
+              <a class="text-white">Shipping Rates</a>
+            </p>
+            <p>
+              <a class="text-white">Help</a>
+            </p>
+          </div>
+
+          <!-- Grid column -->
+          <hr class="w-100 clearfix d-md-none" />
+
+          <!-- Grid column -->
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+            <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+            <p><i class="fas fa-home mr-3"></i> India</p>
+            <p><i class="fas fa-envelope mr-3"></i> reusemarket@gmail.com</p>
+          </div>
+          <!-- Grid column -->
+        </div>
+        <!--Grid row-->
+      </section>
+      <!-- Section: Links -->
+
+      <hr class="my-3">
+
+      <!-- Section: Copyright -->
+      <section class="p-3 pt-0">
+        <div class="row d-flex align-items-center">
+          <!-- Grid column -->
+          <div class="col-md-7 col-lg-8 text-center text-md-start">
+            <!-- Copyright -->
+            <div class="p-3">
+              © 2020 Copyright:
+              <a class="text-white" href="">Reusemarket.com</a
+                >
+
+            </div>
+            <!-- Copyright -->
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end">
+            <!-- Facebook -->
+            <a
+            class="btn text-white btn-floating m-1 rounded-circle"
+            style="background-color:white"
+            href="#!"
+            role="button"
+            ><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></a>
+
+            <!-- Twitter -->
+            <a
+                      class="btn text-white btn-floating m-1 rounded-circle"
+                      style="background-color: white"
+                      href="#!"
+                      role="button"
+                      ><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
+
+      
+            <!-- Instagram -->
+            <a
+               class="btn btn-outline-light btn-floating m-1"
+               style="background-color: white"
+               href="#!"
+               role="button"
+               ><svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
+          </div>
+          <!-- Grid column -->
+        </div>
+      </section>
+      <!-- Section: Copyright -->
+    </div>
+    <!-- Grid container -->
+  </footer>
+  <!-- Footer -->
+</div>
+
+
+
+</body>
+</html>

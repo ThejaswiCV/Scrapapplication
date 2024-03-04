@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+    <style>
+        
+ 
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Lobster+Two&display=swap');
+        .bid_head{
+            font-family: 'Dancing Script', cursive;
+            font-family: 'Lobster Two', sans-serif;
+            }
+
+        .badge.bg-danger {
+          font-size: 1rem; 
+          padding: 0.3rem 1rem; 
+        }
+      </style>
+
+
+    <nav class="navbar fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><img style="margin-left: 15px;"  src="{%static 'scrapapp/images/scrap_Box.png'%}" alt="" height="45px">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header" style="background-color: rgba(153, 205, 209, 0.685)">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">SCRAP BOX</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{%url 'index'%}">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{%url 'profile_detail' request.user.profile.id%}">My profile</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Scraps
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{%url 'scrap_add'%}">Add Scrap</a></li>
+                    
+                  </ul>
+      
+      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" >
+      <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="{%url 'sign-out'%}">Logout</a>
+      </li>
+      </ul>
+      
+                </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+      </nav>
+<!-- nav bar ends  -->
+
+<section class="vh-100 gradient-custom-2">
+    <div class="container py-4 h-100" style="margin-top: -30px;">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-12 col-xl-10">
+  
+          <div class="card mask-custom">
+            <div class="card-body p-4 text-white">
+  
+              <div class="text-center pb-2">
+                <span><h1 class="bid_head" style="color: black;margin-top: 5px;">Bid Requests</h1>
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+                  alt="Check" width="60" style="margin-bottom: 30px;"></span>
+               
+              </div>
+              {%if bids%}
+              <table class="table text-white mb-0">
+                <thead>
+                  <tr>
+                    <th scope="col">Requested User</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Bid Amount</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+             
+                {%for data in bids%}
+               
+                       {%if data.user.profile.profile_picture %}
+                          <th>
+                            <img class="rounded-circle" src="{{data.user.profile.profile_picture.url}}"
+                              alt="avatar 1" style="width: 45px; height: auto;">
+                      {%else%} 
+                      <th>    
+                              <img class="rounded-circle" src="{%static 'scrapapp/images/user_image2.png'%}"
+                              alt="avatar 1" style="width: 45px; height: auto;"> 
+                    {%endif%} 
+                            <span class="ms-2">{{data.user.profile}}</span>
+                          </th></th>  
+                   
+                    <td class="align-middle">
+                        <span><a href="{%url 'scrap_details' scrap.id%}" class="card-text text-decoration-none text-dark"> {{data.scrap}}</a></span>
+                    </td>
+                    <td class="align-middle">
+                      <h6 class="mb-0"><span class="badge bg-danger">{{data.amount}}</span></h6>
+                    </td>
+                    <td class="align-middle">
+                        <span> {{data.status}}</span>
+                    </td>
+                    <td class="align-middle">
+                        <form class="d-flex gap-3" action="{%url 'bids_request' data.id%}" method="post">
+                            {%csrf_token%}
+                            <div>
+                                <input type="hidden" name="bid_id" value="{{ bid.id }}">
+                                <button name="action" value="accept" class="btn btn-success "><i class="fa-solid fa-circle-check"></i> Accept</button>
+                            </div>
+                            <div>
+                                <button name="action" value="reject" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i> Reject</button>
+                            </div>
+                        </form>
+                    </td>
+                  </tr>
+                 
+                  {%endfor%}
+                {%else%}
+                
+                   <img src="{%static 'scrapapp/images/request.jpg'%}" style="height: 250px;width: 250px;margin-left: 320px;"  alt="">
+                   <p style="color: black;text-align: center;">No bid requests to show</p>
+                {% endif %}
+                 
+                 
+                  
+                </tbody>
+              </table>
+
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
